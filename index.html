@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faso24 - L'information en continu</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset et styles de base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Barre de navigation */
+        .navbar {
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo h1 {
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .logo .faso {
+            color: #e30613;
+        }
+
+        .logo .twenty-four {
+            color: #333;
+        }
+
+        .logo p {
+            font-size: 12px;
+            color: #666;
+            margin-top: -5px;
+        }
+
+        .nav-links ul {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links ul li {
+            margin-left: 20px;
+        }
+
+        .nav-links ul li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links ul li a:hover, 
+        .nav-links ul li a.active {
+            color: #e30613;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-box input {
+            padding: 8px 15px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            outline: none;
+            width: 200px;
+        }
+
+        .search-box button {
+            background: none;
+            border: none;
+            margin-left: -35px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .mobile-menu {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Breaking News */
+        .breaking-news {
+            background-color: #e30613;
+            color: white;
+            padding: 10px 0;
+        }
+
+        .breaking-news .container {
+            display: flex;
+            align-items: center;
+        }
+
+        .breaking-label {
+            background-color: #000;
+            padding: 5px 10px;
+            font-weight: bold;
+            margin-right: 20px;
+            font-size: 14px;
+        }
+
+        .breaking-content {
+            flex-grow: 1;
+        }
+
+        .breaking-item {
+            margin-right: 30px;
+            display: inline-block;
+        }
+
+        /* Article vedette */
+        .featured-article {
+            display: flex;
+            margin: 30px 0;
+            background-color: #fff;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .featured-image {
+            flex: 1;
+            position: relative;
+        }
+
+        .featured-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .featured-content {
+            flex: 1;
+            padding: 30px;
+        }
+
+        .featured-content h2 {
+            font-size: 28px;
+            margin-bottom: 15px;
+            color: #222;
+        }
+
+        .meta {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .author {
+            color: #e30613;
+            font-weight: 500;
+        }
+
+        .excerpt {
+            margin-bottom: 20px;
+            color: #444;
+        }
+
+        .read-more {
+            color: #e30613;
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .read-more i {
+            margin-left: 5px;
+            transition: transform 0.3s;
+        }
+
+        .read-more:hover i {
+            transform: translateX(5px);
+        }
+
+        /* Grille d'articles */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .article-card {
+            background-color: #fff;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .article-image {
+            height: 180px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .article-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .article-card:hover .article-image img {
+            transform: scale(1.05);
+        }
+
+        .article-content {
+            padding: 15px;
+        }
+
+        .article-content h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        /* Catégories */
+        .category-label {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            padding: 5px 10px;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            border-radius: 3px;
+        }
+
+        .politique {
+            background-color: #e30613;
+        }
+
+        .economie {
+            background-color: #0066cc;
+        }
+
+        .sport {
+            background-color: #00a859;
+        }
+
+        .culture {
+            background-color: #ff9e1b;
+        }
+
+        .afrique {
+            background-color: #8a2be2;
+        }
+
+        /* Section vidéo */
+        .video-section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #222;
+        }
+
+        .see-all {
+            font-size: 14px;
+            color: #e30613;
+            cursor: pointer;
+        }
+
+        .see-all i {
+            margin-left: 5px;
+        }
+
+        .videos-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .video-card {
+            background-color: #fff;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .video-thumbnail {
+            position: relative;
+            height: 180px;
+            overflow: hidden;
+        }
+
+        .video-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .play-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            background-color: rgba(227, 6, 19, 0.8);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .video-card h3 {
+            padding: 15px;
+            font-size: 16px;
+        }
+
+        /* Pied de page */
+        .footer {
+            background-color: #222;
+            color: #fff;
+            padding: 50px 0 20px;
+        }
+
+        .footer-top {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .footer-column p {
+            color: #bbb;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: #bbb;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: #e30613;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-links a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 35px;
+            height: 35px;
+            background-color: #333;
+            border-radius: 50%;
+            color: #fff;
+            transition: background-color 0.3s;
+        }
+
+        .social-links a:hover {
+            background-color: #e30613;
+        }
+
+        .newsletter-form {
+            display: flex;
+            margin-top: 15px;
+        }
+
+        .newsletter-form input {
+            flex-grow: 1;
+            padding: 10px;
+            border: none;
+            outline: none;
+            border-radius: 3px 0 0 3px;
+        }
+
+        .newsletter-form button {
+            background-color: #e30613;
+            color: white;
+            border: none;
+            padding: 0 15px;
+            cursor: pointer;
+            border-radius: 0 3px 3px 0;
+            transition: background-color 0.3s;
+        }
+
+        .newsletter-form button:hover {
+            background-color: #c00511;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            font-size: 12px;
+            color: #bbb;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .footer-links a {
+            color: #bbb;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #e30613;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 5% auto;
+            width: 80%;
+            max-width: 800px;
+            border-radius: 5px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            animation: modalopen 0.5s;
+        }
+
+        @keyframes modalopen {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            color: #e30613;
+            font-size: 24px;
+        }
+
+        .close-btn {
+            font-size: 28px;
+            color: #333;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-btn:hover {
+            color: #e30613;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .article-image-modal {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .article-content-modal {
+            line-height: 1.8;
+            color: #333;
+        }
+
+        .article-content-modal p {
+            margin-bottom: 20px;
+        }
+
+        /* Tablettes */
+        @media (max-width: 992px) {
+            .articles-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .footer-top {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .featured-article {
+                flex-direction: column;
+            }
+            
+            .featured-image {
+                height: 300px;
+            }
+
+            .modal-content {
+                width: 90%;
+            }
+
+            .article-image-modal {
+                height: 300px;
+            }
+        }
+
+        /* Petites tablettes */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .search-box {
+                display: none;
+            }
+            
+            .mobile-menu {
+                display: block;
+            }
+            
+            .articles-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .videos-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .breaking-label {
+                display: none;
+            }
+
+            .modal-content {
+                width: 95%;
+                margin: 10% auto;
+            }
+
+            .article-image-modal {
+                height: 250px;
+            }
+        }
+
+        /* Téléphones */
+        @media (max-width: 576px) {
+            .articles-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-top {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-bottom {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 5px;
+                text-align: center;
+            }
+            
+            .logo h1 {
+                font-size: 24px;
+            }
+
+            .modal-header h2 {
+                font-size: 20px;
+            }
+
+            .article-image-modal {
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Barre de navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <h1><span class="faso">FASO</span><span class="twenty-four">24</span></h1>
+                <p>L'information en continu</p>
+            </div>
+            <div class="nav-links">
+                <ul>
+                    <li><a href="#" class="active">Accueil</a></li>
+                    <li><a href="#">Burkina Faso</a></li>
+                    <li><a href="#">Afrique</a></li>
+                    <li><a href="#">Monde</a></li>
+                    <li><a href="#">Économie</a></li>
+                    <li><a href="#">Sports</a></li>
+                    <li><a href="#">Culture</a></li>
+                </ul>
+            </div>
+            <div class="search-box">
+                <input type="text" placeholder="Rechercher...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+            <div class="mobile-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Bannière Breaking News -->
+    <div class="breaking-news">
+        <div class="container">
+            <div class="breaking-label">EN DIRECT</div>
+            <div class="breaking-content">
+                <marquee behavior="scroll" direction="left">
+                    <span class="breaking-item">• Le Président participe au sommet de la CEDEAO</span>
+                    <span class="breaking-item">• Coupe d'Afrique des Nations : les préparatifs</span>
+                    <span class="breaking-item">• Nouvelle politique agricole annoncée</span>
+                </marquee>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contenu principal -->
+    <main class="container">
+        <!-- Article vedette -->
+        <section class="featured-article">
+            <div class="featured-image">
+                <img src="https://via.placeholder.com/800x500?text=Reforme+Education" alt="Article vedette">
+                <div class="category-label politique">Politique</div>
+            </div>
+            <div class="featured-content">
+                <h2>Le gouvernement annonce une réforme majeure de l'éducation nationale</h2>
+                <p class="meta">Publié il y a 2 heures | Par <span class="author">Aïssata Bamba</span></p>
+                <p class="excerpt">Le ministre de l'Éducation a dévoilé ce matin un plan ambitieux pour restructurer le système éducatif burkinabè, avec un accent particulier sur la formation professionnelle et l'éducation numérique. Cette réforme, qui sera mise en œuvre progressivement sur cinq ans, vise à améliorer la qualité de l'enseignement et à mieux adapter les compétences des étudiants aux besoins du marché du travail.</p>
+                <a href="#" class="read-more" onclick="openModal('featured')">Lire la suite <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </section>
+
+        <!-- Grille d'articles -->
+        <section class="articles-grid">
+            <article class="article-card" onclick="openModal('article1')">
+                <div class="article-image">
+                    <img src="https://via.placeholder.com/400x300?text=Croissance+Economique" alt="Article 1">
+                    <div class="category-label economie">Économie</div>
+                </div>
+                <div class="article-content">
+                    <h3>Croissance économique: le Burkina enregistre une hausse de 5,2%</h3>
+                    <p class="meta">Publié il y a 4 heures</p>
+                </div>
+            </article>
+
+            <article class="article-card" onclick="openModal('article2')">
+                <div class="article-image">
+                    <img src="https://via.placeholder.com/400x300?text=CAN+2025" alt="Article 2">
+                    <div class="category-label sport">Sports</div>
+                </div>
+                <div class="article-content">
+                    <h3>CAN 2025: Les Étalons entament leur préparation</h3>
+                    <p class="meta">Publié il y a 6 heures</p>
+                </div>
+            </article>
+
+            <article class="article-card" onclick="openModal('article3')">
+                <div class="article-image">
+                    <img src="https://via.placeholder.com/400x300?text=FESPACO+2025" alt="Article 3">
+                    <div class="category-label culture">Culture</div>
+                </div>
+                <div class="article-content">
+                    <h3>FESPACO 2025: Les inscriptions sont ouvertes</h3>
+                    <p class="meta">Publié il y a 8 heures</p>
+                </div>
+            </article>
+
+            <article class="article-card" onclick="openModal('article4')">
+                <div class="article-image">
+                    <img src="https://via.placeholder.com/400x300?text=Sommet+UA" alt="Article 4">
+                    <div class="category-label afrique">Afrique</div>
+                </div>
+                <div class="article-content">
+                    <h3>Sommet de l'UA: Les défis sécuritaires à l'ordre du jour</h3>
+                    <p class="meta">Publié il y a 10 heures</p>
+                </div>
+            </article>
+
+            <!-- Plus d'articles -->
+            <article class="article-card" onclick="openModal('article5')">
+                <div class="article-image">
+                    <img src="https://via.placeholder.com/400x300?text=Agriculture" alt="Article 5">
+                    <div class="category-label economie">Économie</div>
+                </div>
+                <div class="article-content">
+                    <h3>Nouveau plan agricole: 50 milliards FCFA investis</h3>
+                    <p class="meta">Publié il y a 12 heures</p>
+                </div>
+            </article>
+
+            <article class="article-card" onclick="openModal('article6')">
+                <div class="article-image">
+                    <img src="https://via.placeholder.com/400x300?text=Innovation" alt="Article 6">
+                    <div class="category-label economie">Technologie</div>
+                </div>
+                <div class="article-content">
+                    <h3>Startups burkinabè: Le boom des innovations locales</h3>
+                    <p class="meta">Publié il y a 1 jour</p>
+                </div>
+            </article>
+
+            <article class="article-card" onclick="openModal('article7')">
+                <div class="article-image">
+                    <img src="https://via.placeholder.com/400x300?text=Santé" alt="Article 7">
+                    <div class="category-label politique">Santé</div>
+                </div>
+                <div class="article-content">
+                    <h3>Nouveau centre hospitalier inauguré à Bobo-Dioulasso</h3>
+                    <p class="meta">Publié il y a 1 jour</p>
+                </div>
+            </article>
+
+            <article class="article-card" onclick="openModal('article8')">
+                <div class="article-image">
+                    <img src="https://via.placeholder.com/400x300?text=Education" alt="Article 8">
+                    <div class="category-label politique">Éducation</div>
+                </div>
+                <div class="article-content">
+                    <h3>Université de Ouagadougou: Nouveaux programmes pour 2024</h3>
+                    <p class="meta">Publié il y a 2 jours</p>
+                </div>
+            </article>
+        </section>
+
+        <!-- Section vidéo -->
+        <section class="video-section">
+            <h2 class="section-title">Vidéos <span class="see-all">Voir tout <i class="fas fa-arrow-right"></i></span></h2>
+            <div class="videos-grid">
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="https://via.placeholder.com/600x400?text=Interview+Ministre" alt="Video 1">
+                        <div class="play-icon"><i class="fas fa-play"></i></div>
+                    </div>
+                    <h3>Interview exclusive avec le ministre des Finances</h3>
+                    <p class="meta">Publié il y a 1 jour | 15:32</p>
+                </div>
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="https://via.placeholder.com/600x400?text=Infrastructures" alt="Video 2">
+                        <div class="play-icon"><i class="fas fa-play"></i></div>
+                    </div>
+                    <h3>Reportage: Les nouvelles infrastructures de Ouaga</h3>
+                    <p class="meta">Publié il y a 2 jours | 08:45</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Pied de page -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-column">
+                    <h3>FASO24</h3>
+                    <p>Le premier journal numérique d'information en continu au Burkina Faso.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Rubriques</h3>
+                    <ul>
+                        <li><a href="#">Politique</a></li>
+                        <li><a href="#">Économie</a></li>
+                        <li><a href="#">Société</a></li>
+                        <li><a href="#">Sports</a></li>
+                        <li><a href="#">Culture</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Entreprise</h3>
+                    <ul>
+                        <li><a href="#">À propos</a></li>
+                        <li><a href="#">Équipe</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Publicité</a></li>
+                        <li><a href="#">Carrières</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Newsletter</h3>
+                    <p>Abonnez-vous pour recevoir l'actualité quotidienne</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Votre email">
+                        <button type="submit">S'abonner</button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Faso24. Tous droits réservés.</p>
+                <div class="footer-links">
+                    <a href="#">Mentions légales</a>
+                    <a href="#">Politique de confidentialité</a>
+                    <a href="#">Conditions d'utilisation</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals pour les articles -->
+    <div id="featured-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Le gouvernement annonce une réforme majeure de l'éducation nationale</h2>
+                <span class="close-btn" onclick="closeModal('featured-modal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <img src="https://via.placeholder.com/800x500?text=Reforme+Education" alt="Article vedette" class="article-image-modal">
+                <div class="article-meta">
+                    <span>Publié il y a 2 heures</span>
+                    <span>Par Aïssata Bamba</span>
+                </div>
+                <div class="article-content-modal">
+                    <p>Le ministre de l'Éducation nationale, Pr Stanislas Ouaro, a présenté ce matin en conseil des ministres un ambitieux plan de réforme du système éducatif burkinabè. Ce plan quinquennal, doté d'un budget de 200 milliards de FCFA, vise à moderniser en profondeur l'enseignement primaire, secondaire et supérieur.</p>
+                    
+                    <p>Les principales mesures annoncées comprennent :</p>
+                    
+                    <ul>
+                        <li>La révision des programmes scolaires pour y intégrer davantage de compétences pratiques et numériques</li>
+                        <li>La construction de 100 nouveaux collèges d'enseignement général dans les zones rurales</li>
+                        <li>La formation de 10 000 enseignants aux nouvelles méthodes pédagogiques</li>
+                        <li>L'introduction de l'enseignement du codage informatique dès la classe de 4ème</li>
+                        <li>Le renforcement des partenariats avec les entreprises pour des formations en alternance</li>
+                    </ul>
+                    
+                    <p>Selon le ministre Ouaro, "cette réforme répond à un double défi : améliorer la qualité de l'éducation tout en la rendant plus accessible, et surtout mieux adapter nos diplômés aux besoins réels du marché du travail, tant au niveau national qu'international".</p>
+                    
+                    <p>Les syndicats d'enseignants ont accueilli favorablement l'annonce, tout en exprimant certaines réserves quant aux modalités pratiques de mise en œuvre. "Nous saluons cette initiative ambitieuse, mais nous resterons vigilants sur les conditions de travail des enseignants et les moyens alloués", a déclaré le secrétaire général du SYNTER, M. Boubacar Diallo.</p>
+                    
+                    <p>La première phase de la réforme devrait débuter dès la rentrée scolaire 2024-2025, avec la formation des formateurs et l'expérimentation des nouveaux programmes dans 50 établissements pilotes.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="article1-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Croissance économique: le Burkina enregistre une hausse de 5,2%</h2>
+                <span class="close-btn" onclick="closeModal('article1-modal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <img src="https://via.placeholder.com/800x500?text=Croissance+Economique" alt="Croissance économique" class="article-image-modal">
+                <div class="article-meta">
+                    <span>Publié il y a 4 heures</span>
+                    <span>Par Jean Kaboré</span>
+                </div>
+                <div class="article-content-modal">
+                    <p>L'économie burkinabè a enregistré une croissance de 5,2% au premier trimestre 2023, selon les chiffres publiés ce matin par l'Institut National de la Statistique et de la Démographie (INSD). Cette performance, supérieure aux prévisions qui tablaient sur 4,7%, s'explique principalement par la bonne tenue des secteurs agricole et minier.</p>
+                    
+                    <p>Le ministre de l'Économie, des Finances et de la Prospective, Dr Seglaro Abel Somé, s'est félicité de ces résultats lors d'une conférence de presse : "Malgré un contexte international difficile, le Burkina Faso démontre sa résilience économique. Les réformes structurelles engagées depuis deux ans portent leurs fruits."</p>
+                    
+                    <p>Par secteur, la croissance se répartit comme suit :</p>
+                    
+                    <ul>
+                        <li>Agriculture : +6,8% (contre +4,2% en 2022)</li>
+                        <li>Industrie minière : +7,3%</li>
+                        <li>BTP : +4,1%</li>
+                        <li>Services : +3,9%</li>
+                        <li>Commerce : +4,5%</li>
+                    </ul>
+                    
+                    <p>Les experts économiques mettent cependant en garde contre plusieurs défis persistants, notamment l'inflation qui s'établit à 8,3% sur un an, et le déficit budgétaire qui reste élevé à 4,8% du PIB. "La croissance est encourageante, mais elle doit être plus inclusive et s'accompagner d'une maîtrise des déséquilibres macroéconomiques", souligne Dr Aminata Ouédraogo, économiste à l'Université de Ouagadougou.</p>
+                    
+                    <p>Le gouvernement maintient sa prévision de croissance à 5,5% pour l'ensemble de l'année 2023, grâce notamment aux effets attendus du nouveau plan agricole et des investissements dans les infrastructures.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="article2-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>CAN 2025: Les Étalons entament leur préparation</h2>
+                <span class="close-btn" onclick="closeModal('article2-modal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <img src="https://via.placeholder.com/800x500?text=CAN+2025" alt="CAN 2025" class="article-image-modal">
+                <div class="article-meta">
+                    <span>Publié il y a 6 heures</span>
+                    <span>Par Adama Traoré</span>
+                </div>
+                <div class="article-content-modal">
+                    <p>La sélection nationale de football, les Étalons du Burkina Faso, a entamé ce lundi sa préparation en vue de la Coupe d'Afrique des Nations (CAN) 2025 qui se tiendra au Maroc. Le stage de regroupement, qui réunit 28 joueurs, se déroule au Centre National d'Entraînement de Ouagadougou sous la direction du sélectionneur Hubert Velud.</p>
+                    
+                    <p>"Nous avons un programme chargé avec plusieurs matches amicaux de haut niveau pour affiner notre jeu et notre cohésion d'équipe", a déclaré le technicien français lors de la conférence de presse d'ouverture du stage. "L'objectif est clair : faire mieux qu'en 2021 où nous avions terminé quatrièmes."</p>
+                    
+                    <p>Parmi les temps forts de cette préparation :</p>
+                    
+                    <ul>
+                        <li>Un stage en Turquie du 15 au 30 novembre avec 3 matches amicaux</li>
+                        <li>Une participation au CHAN 2024 en janvier</li>
+                        <li>Des rencontres amicales contre le Sénégal et la Côte d'Ivoire en mars 2024</li>
+                    </ul>
+                    
+                    <p>Le capitaine de l'équipe, Bertrand Traoré (Aston Villa), a exprimé la détermination du groupe : "Nous avons une génération talentueuse et expérimentée. Tous les joueurs sont motivés à l'idée d'écrire une nouvelle page glorieuse du football burkinabè."</p>
+                    
+                    <p>Les Étalons, actuellement 3èmes de leur groupe de qualification après deux journées, affronteront le Cap-Vert et l'Eswatini en septembre dans le cadre des éliminatoires. Le tirage au sort de la phase finale de la CAN 2025 aura lieu en octobre 2024 à Rabat.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="article3-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>FESPACO 2025: Les inscriptions sont ouvertes</h2>
+                <span class="close-btn" onclick="closeModal('article3-modal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <img src="https://via.placeholder.com/800x500?text=FESPACO+2025" alt="FESPACO 2025" class="article-image-modal">
+                <div class="article-meta">
+                    <span>Publié il y a 8 heures</span>
+                    <span>Par Fatimata Ouédraogo</span>
+                </div>
+                <div class="article-content-modal">
+                    <p>Le comité d'organisation du Festival Panafricain du Cinéma et de la Télévision de Ouagadougou (FESPACO) a officiellement ouvert ce lundi les inscriptions pour la 29ème édition qui se tiendra du 22 février au 1er mars 2025. Les réalisateurs africains ont jusqu'au 30 novembre 2024 pour soumettre leurs films dans les différentes catégories en compétition.</p>
+                    
+                    <p>Pour cette édition placée sous le thème "Cinéma africain et enjeux climatiques", le festival introduit plusieurs innovations :</p>
+                    
+                    <ul>
+                        <li>Une nouvelle catégorie "Film documentaire environnemental" dotée d'un prix spécial</li>
+                        <li>Un marché du film vert pour promouvoir les coproductions sur les thématiques écologiques</li>
+                        <li>Des projections en plein air alimentées à l'énergie solaire</li>
+                        <li>Un forum sur les pratiques écoresponsables dans l'industrie cinématographique</li>
+                    </ul>
+                    
+                    <p>Le délégué général du FESPACO, Alex Moussa Sawadogo, a souligné l'importance de cette édition : "Alors que l'Afrique subit de plein fouet les effets du changement climatique, notre cinéma a un rôle crucial à jouer pour sensibiliser, éduquer et proposer des solutions. Le FESPACO 2025 sera la vitrine de cette cinématographie engagée."</p>
+                    
+                    <p>Les cinéastes intéressés peuvent soumettre leurs œuvres via la nouvelle plateforme numérique du festival (www.fespaco.bf) qui simplifie le processus d'inscription. La sélection officielle sera annoncée le 15 janvier 2025.</p>
+                    
+                    <p>Rappelons que lors de la dernière édition en 2023, c'est le film burkinabè "Sira" de Apolline Traoré qui avait remporté l'Étalon d'or de Yennenga, la plus haute distinction du festival.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="article4-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Sommet de l'UA: Les défis sécuritaires à l'ordre du jour</h2>
+                <span class="close-btn" onclick="closeModal('article4-modal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <img src="https://via.placeholder.com/800x500?text=Sommet+UA" alt="Sommet UA" class="article-image-modal">
+                <div class="article-meta">
+                    <span>Publié il y a 10 heures</span>
+                    <span>Par Ibrahim Diallo</span>
+                </div>
+                <div class="article-content-modal">
+                    <p>Le 36ème sommet ordinaire de l'Union africaine (UA), qui s'ouvre demain à Addis-Abeba en Éthiopie, placera la sécurité au cœur des débats. Les chefs d'État et de gouvernement africains se réunissent pour trouver des solutions communes face à la multiplication des foyers de tension sur le continent, notamment dans la région du Sahel.</p>
+                    
+                    <p>Le président burkinabè, Ibrahim Traoré, qui participe à ce sommet, portera la voix des pays du G5 Sahel (Burkina Faso, Mali, Mauritanie, Niger, Tchad) pour demander un renforcement de l'engagement continental dans la lutte contre le terrorisme. "La situation sécuritaire dans notre région nécessite une réponse africaine concertée et des moyens à la hauteur des enjeux", a déclaré le chef de l'État avant son départ.</p>
+                    
+                    <p>Plusieurs dossiers sensibles seront abordés :</p>
+                    
+                    <ul>
+                        <li>L'opérationnalisation de la Force africaine en attente</li>
+                        <li>Le financement des opérations de maintien de la paix</li>
+                        <li>La lutte contre le financement du terrorisme</li>
+                        <li>La coopération renforcée entre services de renseignement</li>
+                        <li>La protection des frontières</li>
+                    </ul>
+                    
+                    <p>Le commissaire paix et sécurité de l'UA, Bankole Adeoye, a annoncé la tenue d'une session extraordinaire consacrée spécifiquement à la crise sécuritaire au Sahel. "Nous devons passer des discours aux actes concrets. Le temps est à l'action collective et à la solidarité continentale", a-t-il insisté.</p>
+                    
+                    <p>Parallèlement aux discussions sécuritaires, le sommet abordera également les questions de gouvernance démocratique, avec un focus particulier sur les transitions en cours dans plusieurs pays, ainsi que le dossier de l'adhésion de l'Union africaine au G20.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Fonctions pour gérer les modals
+        function openModal(articleId) {
+            document.getElementById(articleId + '-modal').style.display = 'block';
+            document.body.style.overflow = 'hidden'; // Empêche le défilement de la page
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+            document.body.style.overflow = 'auto'; // Rétablit le défilement
+        }
+
+        // Fermer la modal en cliquant en dehors
+        window.onclick = function(event) {
+            const modals = document.getElementsByClassName('modal');
+            for (let i = 0; i < modals.length; i++) {
+                if (event.target == modals[i]) {
+                    modals[i].style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            }
+        }
+
+        // Menu mobile
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuBtn = document.querySelector('.mobile-menu');
+            const navLinks = document.querySelector('.nav-links');
+            
+            mobileMenuBtn.addEventListener('click', function() {
+                navLinks.style.display = navLinks.style.display === 'block' ? 'none' : 'block';
+            });
+            
+            // Animation des articles
+            const articleCards = document.querySelectorAll('.article-card');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            articleCards.forEach(card => {
+                card.style.opacity = 0;
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                observer.observe(card);
+            });
+            
+            // Simulation de chargement des articles
+            window.addEventListener('scroll', function() {
+                if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 500) {
+                    // Ici vous pourriez charger plus d'articles via AJAX
+                    console.log('Charger plus d\'articles...');
+                }
+            });
+            
+            // Gestion de la recherche
+            const searchForm = document.querySelector('.search-box');
+            if (searchForm) {
+                searchForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const searchInput = this.querySelector('input');
+                    alert('Recherche pour: ' + searchInput.value);
+                    searchInput.value = '';
+                });
+            }
+            
+            // Gestion de la newsletter
+            const newsletterForm = document.querySelector('.newsletter-form');
+            if (newsletterForm) {
+                newsletterForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const emailInput = this.querySelector('input[type="email"]');
+                    alert('Merci pour votre inscription avec l\'email: ' + emailInput.value);
+                    emailInput.value = '';
+                });
+            }
+        });
+    </script>
+</body>
+</html>
